@@ -3,11 +3,11 @@ from nmeasim.models import GpsReceiver
 import time
 import serial
 import keyboard
+import random
 
-# Listen to keys and quit script if I press escape key
-def on_press(key):
-    if key == keyboard.Key.esc:
-        return False
+# Function to get a random invalid NMEA prefix
+def get_invalid_NMEA_prefix():
+    return random.choice([b'GPGGA', b'GPGSA', b'GPGSV', b'GPGLL', b'GPVTG', b'GPZDA'])
         
 
 # Serial device configuration
@@ -25,6 +25,8 @@ gps = GpsReceiver(
     date_time=date_time,
     output=('RMC',))
 
+correct_output = True
+
 # Send the GPS data to the serial port
 starting_time = time.time()
 
@@ -35,9 +37,22 @@ while True:
         gps.date_time += timedelta(seconds=1)
 
         # Get the GPS data
-        gps_output = str(gps.get_output()).encode('utf-8')
-        print(gps_output)
+        if correct_output:
+            gps_output = str(gps.get_output()[0]).encode('utf-8')
+        else:
+            gps_output = str(gps.get_output()[0]).encode('utf-8').replace(b'GPRMC', get_invalid_NMEA_prefix())
+
+        print(gps_output.decode())
         ser.write(gps_output)
+    
+    # Check if I pressed correct output key - c
+    if keyboard.is_pressed("c"):
+        correct_output = not correct_output
+        if correct_output:
+            print("Correct output")
+        else:  
+            print("Incorrect output")
+        time.sleep(0.5)
 
     # Check if I pressed escape key - q
     if keyboard.is_pressed("q"):
