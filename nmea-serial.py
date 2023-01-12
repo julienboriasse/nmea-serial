@@ -5,14 +5,13 @@ import serial
 import keyboard
 import random
 
-# Function to get a random invalid NMEA prefix
-def get_invalid_NMEA_prefix():
-    return random.choice([b'GPGGA', b'GPGSA', b'GPGSV', b'GPGLL', b'GPVTG', b'GPZDA'])
-        
-
 # Serial device configuration
 COM_PORT = 'COM20'  # COM port of the serial device
 COM_SPEED = 115200  # COM speed of the serial device
+
+# Function to get a random invalid NMEA prefix
+def get_invalid_NMEA_prefix():
+    return random.choice([b'GPGGA', b'GPGSA', b'GPGSV', b'GPGLL', b'GPVTG', b'GPZDA'])
 
 # Open the serial port
 ser = serial.Serial(COM_PORT, COM_SPEED, timeout=1)
