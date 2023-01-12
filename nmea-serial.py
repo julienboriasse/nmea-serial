@@ -24,6 +24,8 @@ gps = GpsReceiver(
     date_time=date_time,
     output=('RMC',))
 
+# TODO: Add GPS parameters as per documentation: https://pypi.org/project/nmeasim/
+
 correct_output = True
 
 # Send the GPS data to the serial port
