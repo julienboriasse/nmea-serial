@@ -20,3 +20,7 @@ Taper la commande suivante :
 
 * Appuyer sur la touche `c` pour changer la sortie correcte ou incorrecte.
 * Appuyer sur la touche `q` pour quitter.
+
+## Plus d'information
+
+[Trames NMEA](http://aprs.gids.nl/nmea/#rmc)
